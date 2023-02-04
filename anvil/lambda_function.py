@@ -13,6 +13,12 @@ def lambda_handler(event, context):
     )
     cursor = conn.cursor()
 
+    if params.get('type') == 'test':
+        return {
+            'statusCode': 200,
+            'body': 'Hello, this is a test'
+        }
+
     # testing
     if params.get('type') == 'InitTables':
         cursor.execute('CREATE TABLE Users (user_id INT, forum_id INT, email VARCHAR(255), passcode INT)')
@@ -45,7 +51,7 @@ def lambda_handler(event, context):
             if (len(result)==0): # no user found in database
                 return {
                     'statusCode': 404,
-                    'responseValue': 0,
+                    'responseValue': 0
                 }
             else: 
                 if((result[0] != params.get('email')) or (result[1] != params.get('passcode')):
@@ -76,7 +82,7 @@ def lambda_handler(event, context):
                 return 
                 {
                     'statusCode': 200,
-                    'responseValue': 1,
+                    'responseValue': 1
                 }
             else: #a user with the same email exists
                 return 
@@ -102,14 +108,14 @@ def lambda_handler(event, context):
                 {
                     #Successful Add
                     'statusCode': 200,
-                    'responseValue': 1,
+                    'responseValue': 1
                 }
             else:
                 return 
                 {
                     #A forum with that id/name already exists
                     'statusCode': 404,
-                    'responseValue': 0,
+                    'responseValue': 0
                 }
         conn.commit()
         conn.close()    
@@ -167,7 +173,7 @@ def lambda_handler(event, context):
             if (database): # found in database
                 return {
                     'statusCode': 200,
-                    'responseValue': 1,
+                    'responseValue': 1
                 }
             else: # not found in database
                 return {

@@ -54,7 +54,7 @@ def lambda_handler(event, context):
     
     #CreateForum(workplace, addr, forum_name, user_id)       
     if event.get('type') == 'CreateForum':
-        if (event.get('workplace') and event.get('addr') and event.get('forum_pass') and event.get('user_id')):
+        if (event.get('workplace') and event.get('addr') and event.get('forum_name') and event.get('user_id')):
             # database check will set database number
             # TODO DATABASE WORK
             database = 1

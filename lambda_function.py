@@ -1,11 +1,9 @@
 import json
 
 def lambda_handler(event, context):
+    # VerifyUser(user_id, hashed_pass)
     if event.get('type') == 'VerifyUser':
-        # required fields from front
-        # userID, hashedpass
-        if (event.get('userID') and event.get('hashedpass')):
-            
+        if (event.get('user_id') and event.get('hashed_pass')):
             # database check will set database number
             # TODO DATABASE WORK
             database = 1
@@ -24,7 +22,7 @@ def lambda_handler(event, context):
             return {
                 'statusCode':404
             }
-        
+
     # TODO implement
     return {
         'statusCode': 200,

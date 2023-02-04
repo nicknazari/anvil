@@ -13,10 +13,24 @@ def lambda_handler(event, context):
     )
     cursor = conn.cursor()
 
+    def standard_response(data):
+        return {
+            'statusCode': 200,
+            'body': data,
+            'headers': {
+                'Access-Control-Allow-Origin': '*'
+            }
+        }
+
     if params.get('type') == 'test':
         return {
             'statusCode': 200,
-            'body': 'Hello, this is a test'
+            'body': 'Hello, this is a test',
+            'headers': {
+                'Access-Control-Allow-Headers': 'Content-Type',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
+            }
         }
 
     # testing
@@ -27,6 +41,16 @@ def lambda_handler(event, context):
         
         conn.commit()
         conn.close()
+
+        return {
+            'statusCode': 200,
+            'body': 'tables initialized',
+            'headers': {
+                'Access-Control-Allow-Headers': 'Content-Type',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
+            }
+        }
         
         #cursor.execute("INSERT INTO customer (name, address) VALUES ('bob', '123'),('joe','123')")
         #cursor.execute("SELECT * FROM customer")
@@ -42,7 +66,8 @@ def lambda_handler(event, context):
 #Login Page Functions
     # VerifyUser(email, passcode)
     if params.get('type') == 'VerifyUser':
-        if (params.get('email') and params.get('passcode')):
+        #if (params.get('email') and params.get('passcode')):
+        """
             # database check will set database number
             # TODO DATABASE WORK
             cursor.execute("SELECT email,passcode FROM Users WHERE email = event.get('email') AND passcode = event.get('passcode')")
@@ -54,19 +79,34 @@ def lambda_handler(event, context):
                     'responseValue': 0
                 }
             else: 
-                if((result[0] != params.get('email')) or (result[1] != params.get('passcode')):
+                if((result[0] != params.get('email')) or (result[1] != params.get('passcode'))):
                     return {
                         'statusCode': 404,
                         'responseValue': 0
                     }
                 else:
-                    if((result[0] == params.get('email')) and (result[1] == params.get('passcode')):
+                    if((result[0] == params.get('email')) and (result[1] == params.get('passcode'))):
                         return {
                             'statusCode': 200,
                             'responseValue': 1
                         }
+        """
         conn.commit()
         conn.close()
+
+        return {
+            'statusCode': 200,
+            'body': {
+                'user':event.get('username'),
+                'password':event.get('password')
+            },
+            'headers': {
+                'Access-Control-Allow-Headers': 'Content-Type',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
+            }
+        }
+
            
         
      # CreateAcct(user_id, email, hashed_pass)
@@ -161,12 +201,15 @@ def lambda_handler(event, context):
             result = cursor.fetchall()
             
             if(len(result) == 0):
-                
+                return {
+                }
             
             for row in result:
                 if(row[1] == 0): 
                     cursor.execute("UPDATE Users SET forum_id = event.get('forum_id') WHERE user_id = event.get('user_id') AND forum_id = 0")
                 else:
+                    return {
+                    }
                     
             database = 1
             
@@ -189,5 +232,10 @@ def lambda_handler(event, context):
         'statusCode': 200,
         'body': json.dumps('Request not defined!'),
         'userID': 1000,
-        'event': event.get("userID")
+        'event': event.get("userID"),
+        'headers': {
+            'Access-Control-Allow-Headers': 'Content-Type',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
+        }
     }

@@ -29,6 +29,11 @@ def lambda_handler(event, context):
             'val2':json.dumps(val2[0])
         }
 
+    if event.get('type') == 'test':
+        return {
+            'statusCode': 200,
+            'body': json.dumps('Successful test')
+        }
 
 #Login Page Functions
     # VerifyUser(user_id, hashed_pass)

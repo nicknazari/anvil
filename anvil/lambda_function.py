@@ -3,6 +3,8 @@ import mysql.connector
 import os
 
 def lambda_handler(event, context):
+    params = event.get('queryStringParameters')
+    # params will have fields like type, other args, etc. referenceabke by .get('type') etc.
     conn = mysql.connector.connect (
         host=os.environ['host'],
         user=os.environ['user'],
@@ -12,23 +14,19 @@ def lambda_handler(event, context):
     cursor = conn.cursor()
 
     # testing
-    if event.get('type') == 'MakeTable':
+    if params.get('type') == 'InitTables':
         cursor.execute('CREATE TABLE Users (user_id INT, forum_id INT, email VARCHAR(255), passcode INT)')
         cursor.execute('CREATE TABLE Forums (forum_id INT, workplace VARCHAR(255), addr VARCHAR(255), forum_name VARCHAR(255))')
         cursor.execute('CREATE TABLE Messages (messages JSON, forum_id INT, message_number INT)')
         
-        
-        #cursor.execute("INSERT INTO customer (name, address) VALUES ('bob', '123'),('joe','123')")
-
-        #cursor.execute("SELECT * FROM customer")
-        #val1 = cursor.fetchall()
-
-        #cursor.execute("SELECT * FROM customer WHERE address = '123'")
-        #val2 = cursor.fetchall()
-        
         conn.commit()
         conn.close()
         
+        #cursor.execute("INSERT INTO customer (name, address) VALUES ('bob', '123'),('joe','123')")
+        #cursor.execute("SELECT * FROM customer")
+        #val1 = cursor.fetchall()
+        #cursor.execute("SELECT * FROM customer WHERE address = '123'")
+        #val2 = cursor.fetchall()
         #return {
         #    'val1':json.dumps(val1[0]),
         #    'val2':json.dumps(val2[0])
@@ -37,8 +35,8 @@ def lambda_handler(event, context):
 
 #Login Page Functions
     # VerifyUser(email, passcode)
-    if event.get('type') == 'VerifyUser':
-        if (event.get('email') and event.get('passcode')):
+    if params.get('type') == 'VerifyUser':
+        if (params.get('email') and params.get('passcode')):
             # database check will set database number
             # TODO DATABASE WORK
             cursor.execute("SELECT email,passcode FROM Users WHERE email = event.get('email') AND passcode = event.get('passcode')")
@@ -50,13 +48,13 @@ def lambda_handler(event, context):
                     'responseValue': 0,
                 }
             else: 
-                if((result[0] != event.get('email')) or (result[1] != event.get('passcode')):
+                if((result[0] != params.get('email')) or (result[1] != params.get('passcode')):
                     return {
                         'statusCode': 404,
                         'responseValue': 0
                     }
                 else:
-                    if((result[0] == event.get('email')) and (result[1] == event.get('passcode')):
+                    if((result[0] == params.get('email')) and (result[1] == params.get('passcode')):
                         return {
                             'statusCode': 200,
                             'responseValue': 1
@@ -66,8 +64,8 @@ def lambda_handler(event, context):
            
         
      # CreateAcct(user_id, email, hashed_pass)
-    if event.get('type') == 'CreateAcct':
-        if (event.get('user_id') and event.get('email') and event.get('passcode')):
+    if params.get('type') == 'CreateAcct':
+        if (params.get('user_id') and params.get('email') and params.get('passcode')):
             # database check will set database number
             # TODO DATABASE WORK
             cursor.execute("SELECT email FROM Users WHERE email = event.get('email')")          
@@ -88,14 +86,11 @@ def lambda_handler(event, context):
                 }
         conn.commit()
         conn.close()
-       
 
-
-       
 #Create Forum
     #CreateForum(workplace, addr, forum_name, forum_id)       
-    if event.get('type') == 'CreateForum':
-        if (event.get('forum_id') and event.get('workplace') and event.get('addr') and event.get('forum_name')):
+    if params.get('type') == 'CreateForum':
+        if (params.get('forum_id') and params.get('workplace') and params.get('addr') and params.get('forum_name')):
             # database check will set database number
             # TODO DATABASE WORK
             cursor.execute("SELECT forum_id,forum_name FROM Forums WHERE forum_id = event.get('forum_id') AND forum_name = event.get('forum_name')")
@@ -123,8 +118,8 @@ def lambda_handler(event, context):
     
 #User Dashboard Functions
     #GetUserForums(user_id) return list of forum ids and names
-    if event.get('type') == 'GetUserForums':
-        if (event.get('user_id')):
+    if params.get('type') == 'GetUserForums':
+        if (params.get('user_id')):
             # database check will set database number
             # TODO DATABASE WORK
             cursor.execute("SELECT forum_id FROM Users WHERE user_id = event.get('user_id')")
@@ -152,8 +147,8 @@ def lambda_handler(event, context):
 
 #Join Forum
     #AddUserToForum(user_id, forum_id)
-    if (event.get('type') == 'AddUserToForum'):
-        if (event.get('user_id') and event.get('forum_id')):
+    if (params.get('type') == 'AddUserToForum'):
+        if (params.get('user_id') and params.get('forum_id')):
             # database check will set database number
             # TODO DATABASE WORK
             cursor.execute("SELECT user_id, forum_id FROM Users WHERE user_id = event.get('user_id') AND forum_id =  event.get('forum_id')")
@@ -167,13 +162,6 @@ def lambda_handler(event, context):
                     cursor.execute("UPDATE Users SET forum_id = event.get('forum_id') WHERE user_id = event.get('user_id') AND forum_id = 0")
                 else:
                     
-
-            
-            
-            
-            
-            
-            
             database = 1
             
             if (database): # found in database

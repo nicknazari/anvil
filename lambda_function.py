@@ -25,7 +25,6 @@ def lambda_handler(event, context):
                 'statusCode':404
             }
         
-        
     # TODO implement
     return {
         'statusCode': 200,

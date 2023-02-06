@@ -1,0 +1,87 @@
+:root{
+    font-family: Helvetica;
+
+    /* COLOR PALETTE */
+    --Orange: #EB6309;
+    --lightGray: #E6E2DE;
+    --midGray: #BEB9B4;
+    --darkGray: #49474D;
+}
+
+#logo{
+    margin-left: 5vh;
+    height: 10vh;
+    width: 10h;
+    transition: 200ms ease;
+}
+
+#logo:hover{
+    filter: saturate(130%);
+}
+
+#grievanceList{
+    padding-top: 10vh;
+    display: flex;
+    flex-direction: column;
+    padding-left: 20vh;
+    width: 100%;
+    height: 80vh;
+}
+
+#message{
+    width: 50%;
+    padding-top: 10vh;
+    padding-left: 10vh;
+    font-size: 50px;
+    font-weight: bolder;
+    color: var(--Orange);
+}
+
+#allButHeader{
+    display: flex;
+}
+
+#form{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 80vh;
+    padding-right: 10vh;
+}
+
+button{
+    margin-top: auto;
+    background-color: var(--Orange);
+    color: var(--lightGray);
+    font-weight: bold;
+    font-size: 30px;
+    height: 10vh;
+    width: 50%;
+    border-style: none;
+    border-radius: 30px;
+    transition: 200ms ease;
+}
+
+button:hover{
+    filter: saturate(130%);
+}
+
+#grievanceLabel{
+    color: var(--lightGray);
+    font-size: 50px;
+    font-weight: bold;
+    padding-left: 5vh;
+}
+
+.grievance{
+    margin-top: 2vh;
+    display: flex;
+    height: 10vh;
+}
+
+image{
+    width: 5vh;
+    height: 5vh;
+}
+
+

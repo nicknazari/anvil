@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel = "stylesheet" href = "global.css"> 
+    <link rel = "stylesheet" href = "login.css"> 
+</head>
+<body>
+    <div id = "leftContainer">
+        <div id = "logo"> 
+            <p>ANVIL</p>
+            <image id = "anvil" src = "anvil-impact-svgrepo-com.svg"></image>
+        </div>
+        <div id = "mainMessage">
+            <p>
+                An anonymized platform to air workplace grievances, powered by AI
+            </p>
+        </div>
+    </div>  
+    <div id = "logins"> 
+        <form action="/login" method = "post">
+            <div>
+                <div class = inputContainer id = "username">
+                    <input name="usernameInput" id = "inputBar" type="text" required>
+                    <label class = "inputLabel" for="searchBar"> 
+                        <span class = "inputContent"> Email </span>
+                    </label> 
+            </div>
+            <div>
+                <div class = inputContainer id = "password">
+                    <input name="passwordInput" id = "inputBar" type="text" required>
+                    <label class = "inputLabel" for="searchBar"> 
+                        <span class = "inputContent"> Password </span>
+                    </label> 
+            </div>
+        </form>
+        <div id = "buttons"> 
+            <button id = "loginButton">Login</button>
+            <button id = "createButton">Create Account</button>
+            <button id = "enterButton"><a href = "dashboard.html" id = "enterLink" class = "disabled">Enter Site</a></button>
+        </div>
+
+
+    </div>
+    </body>
+    <script src = login.js></script>
+</body>
+</html>

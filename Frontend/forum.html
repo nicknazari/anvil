@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forum</title>
+    <link rel = "stylesheet" href = "global.css">
+    <link rel = "stylesheet" href = "forum.css">
+</head>
+<body>
+    <div id = "logo">
+        <a href = "dashboard.html">
+            <image src = "anvil-impact-svgrepo-com.svg"></image>
+        </a>
+    </div> 
+    <div id = "allButHeader">
+        <div id = "sideBar"> 
+            <div id = "forumName"></div>
+            <div id = "forumCode"></div>
+        </div>
+        <div id = "chatContainer">
+            <div id = "chatBox">
+                <p>Hello</p>
+            </div> 
+            <div id = "chatInput">
+                <form action="/forumPost" method="post">
+                    <div class = inputContainer id = "chatInput">
+                        <input name="messageInput" id = "inputBar" type="text" required>
+                        <label class = "inputLabel" for="searchBar"> 
+                            <span class = "inputContent"> Type here </span>
+                        </label> 
+                </form>
+                <button id = "sendButton">Send</button>
+            </div>
+        </div>
+        <div id="petitions">
+            <button id = "petitionButton"><a href="petition.html">Petition</a></button>
+        </div>
+    </div>
+    <script src = "login.js"></script>
+</body>
+</html>

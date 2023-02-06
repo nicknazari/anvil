@@ -1,0 +1,33 @@
+@keyframes fade{
+    0%{
+        opacity: 0;
+        filter: grayscale(1);
+    }
+
+    100%{
+        opacity: 1;
+        filter: grayscale(0);
+    }
+}
+
+:root{
+    font-family: Helvetica;
+
+    /* COLOR PALETTE */
+    --Orange: #EB6309;
+    --lightGray: #E6E2DE;
+    --midGray: #BEB9B4;
+    --darkGray: #49474D;
+}
+
+body{
+    animation: .5s ease-out 0s 1 fade;
+    margin: 0px;
+    padding: 0px;
+    overflow: hidden;
+    background-color: var(--darkGray);
+}
+
+
+
+

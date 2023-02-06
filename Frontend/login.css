@@ -1,0 +1,151 @@
+:root{
+    font-family: Helvetica;
+
+    /* COLOR PALETTE */
+    --Orange: #EB6309;
+    --lightGray: #E6E2DE;
+    --midGray: #BEB9B4;
+    --darkGray: #49474D;
+}
+
+#leftContainer{
+    padding-left: 5vh;
+    align-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+#logo{
+    align-content: center;
+    font-size: 70px;
+    font-weight: bolder;
+    color: var(--Orange);
+    width: 100%;
+    height: 30%;
+    display: flex;
+}
+
+#mainMessage{
+    align-content: center;
+    font-size: 50px;
+    font-weight: bold;
+    color: var(--Orange);
+    width: 100%;
+    height: 80%;
+}
+
+body{
+    display: flex;
+    background-color: var(--darkGray);
+    overflow: hidden;
+}
+
+#logins{
+    padding-left: 5vh;
+    align-items: center;
+    height: 45vh;
+    width: 100%;
+    margin-top: auto;
+}
+
+#anvil{
+    margin-bottom: 8vh;
+}
+
+#buttons{
+    margin-top: 5vh;
+    display: flex;
+}
+
+button{
+    font-weight: bold;
+    color: var(--lightGray);
+    font-size: 20px;
+    border: solid var(--lightGray) 1px;
+    background-color: var(--Orange);
+    width: 100%;
+    height: 5vh;
+    border-radius: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 30%;
+    margin-right: 10%;
+}
+
+button:hover{
+    filter: saturate(130%);
+}
+
+#username{
+    width: 80%;
+}
+
+#password{
+    width: 80%;
+}
+
+/* INPUT ANIMATION */
+
+#inputBar{
+    background-color: var(--darkGray);
+}
+
+.inputContainer{
+    color: var(--lightGray);
+    font-size: 40px;
+    background-color: var(--darkGray);
+    position: relative;
+    height: 10vh;
+    width: 100%;
+    overflow: hidden;
+}
+
+.inputContainer input{
+    width: 100%;
+    height: 100%;
+    padding-top: 15px;
+    border: none;
+    outline: none;
+}
+
+.inputContainer label{
+    color: var(--lightGray);
+    position: absolute;
+    font-weight: bold;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    border-bottom: solid var(--lightGray) 1px;
+}
+
+.inputContainer label::after{
+    content:"";
+    position: absolute;
+    left: 0px;
+    bottom: -1px;
+    width: 100%;
+    height: 100%;
+    border-bottom: solid var(--Orange) 2px;
+    transform: translateX(-100%);
+    transition: 500ms ease;
+}
+
+.inputContent{
+    position: absolute;
+    bottom: 0px;
+    transition: 500ms ease;
+}
+
+.inputContainer input:focus + .inputLabel .inputContent, 
+.inputContainer input:valid + .inputLabel .inputContent{ 
+    transform: translateY(-150%);
+    color: var(--Orange);
+    font-size: 12px;
+}
+
+.inputContainer input:focus + .inputLabel::after,
+.inputContainer input:valid + .inputLabel::after{
+    transform: translateX(0%);
+}

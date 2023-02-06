@@ -1,4 +1,4 @@
-#The plan now:
+## The plan now:
 
 Express should be super easy to integrate with the lambda function HTTP endpoints. We should probably opt for that over Flask, as all of the front end is written in JS/HTML/CSS, and HTML has super simple default integration with Express. 
 

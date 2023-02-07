@@ -2,24 +2,40 @@ from flask import Flask
 from waitress import serve
 import mysql.connector
 import rds_login
+import json
 
 app = Flask('anvil')
 
-conn = mysql.connector.connect (
-    host=rds_login.host,
-    user=rds_login.user,
-    password=rds_login.password,
-    database=rds_login.database
-)
+# in the case that the app crashes, we don't want to lose all db items,
+# so we will open and close a db connection every time we write data,
+# within each request handler
 
-cursor = conn.cursor()
+def connect():
+    conn = mysql.connector.connect (
+        host=rds_login.host,
+        user=rds_login.user,
+        password=rds_login.password,
+        database=rds_login.database
+    )
+    cursor = conn.cursor(buffered=True)
 
-conn.commit()
-conn.close()
+    return (conn,cursor)
+
+def disconnect(conn):
+    conn.commit()
+    conn.close()
+
+def execute_sql(query):
+    connection = connect()
+    conn = connection[0]
+    cursor = connection[1]
+    cursor.execute(query)
+    disconnect(conn)
+    return cursor.fetchall()
 
 @app.route('/')
 def hello_world():
-    return "<p>Hello, World!</p>"
+    return (execute_sql('select * from users'))
 
 @app.route('/anvil_test')
 def anvil_test():

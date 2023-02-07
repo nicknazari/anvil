@@ -38,10 +38,17 @@ def execute_sql(query):
 def hello_world():
     return (execute_sql('select * from users'))
 
-@app.route('/anvil_test')
+@app.route('/anvil_test', methods=['GET','POST'])
 def anvil_test():
-    return "<p>testing</p>"
+    return_value = {
+        'status':0,
+        'data':0
+        }
+    if request.method == 'POST':
+        return_value['status'] = 1
+        return_value['data'] = request.get_json('email')
 
+    return return_value
 # API functions should return json formatted data
 @app.route('/verifyUser')
 def verify_user():
@@ -62,17 +69,17 @@ def create_account():
         }
 
     # now we know they have passed right args, so lets see if acct exists
-    query = execute_sql('select email from users where email = ' + 
-                           request.form['email'])
+    query = execute_sql('select email from users where email = "' +  
+                           request.form['email'] + '"')
     if len(query) > 0:
         return return_value
     else:
         user_id = 5
         forum_id = 5
-        execute_sql('insert into users values (' + user_id + 
-                            ', ' + forum_id + ', ' +
+        execute_sql('insert into users values ("' + user_id + 
+                            '", "' + forum_id + '", "' +
                             request.form['password'] + 
-                            ', ' + request.form['email'] + ')')
+                            '", "' + request.form['email'] + '")')
         return_value['status'] = 1
         return return_value
 

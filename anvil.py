@@ -1,7 +1,21 @@
 from flask import Flask
 from waitress import serve
+import mysql.connector
+import rds_login
 
 app = Flask('anvil')
+
+conn = mysql.connector.connect (
+    host=rds_login.host,
+    user=rds_login.user,
+    password=rds_login.password,
+    database=rds_login.database
+)
+
+cursor = conn.cursor()
+
+conn.commit()
+conn.close()
 
 @app.route('/')
 def hello_world():

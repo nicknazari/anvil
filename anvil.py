@@ -1,4 +1,5 @@
 from flask import Flask
+from flask import request
 from waitress import serve
 import mysql.connector
 import rds_login
@@ -47,10 +48,33 @@ def verify_user():
     # args: email, hashedP 
     return "<p>Verified</p>"
 
-@app.route('/createAccount')
+@app.route('/createAccount', methods=['POST'])
 def create_account():
+    # flask automatically returns dicts as json
+    # post request containing data email and hashedP
     # args: email, hashedP
-    return "<p>account create</p>"
+    # 3 cases:
+        # invalid args BAD, BUT we assume js frontend took care of that
+        # account exists BAD
+        # account doesnt exist GOOD
+    return_value = {
+        'status':0
+        }
+
+    # now we know they have passed right args, so lets see if acct exists
+    query = execute_sql('select email from users where email = ' + 
+                           request.form['email'])
+    if len(query) > 0:
+        return return_value
+    else:
+        user_id = 5
+        forum_id = 5
+        execute_sql('insert into users values (' + user_id + 
+                            ', ' + forum_id + ', ' +
+                            request.form['password'] + 
+                            ', ' + request.form['email'] + ')')
+        return_value['status'] = 1
+        return return_value
 
 @app.route('/createForum')
 def create_forum():
